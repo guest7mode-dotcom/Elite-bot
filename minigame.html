@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Nurturing High – Minigames</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      color: #ffe6e6;
+      background: url("https://tenor.com/uD6Rx9G3S7F.gif")
+                  center/cover no-repeat fixed;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 18px 40px 40px 40px;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 2px solid #ff1744;
+      box-shadow: 0 0 16px rgba(255, 23, 68, 0.9);
+    }
+    .brand-text {
+      letter-spacing: 0.35em;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #f8bbd0;
+    }
+
+    .top-menu {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .menu-link {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid #ff1744;
+      background: rgba(5, 0, 10, 0.9);
+      color: #ffe6e6;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    .menu-link:hover {
+      background: #ff1744;
+      color: #120003;
+    }
+
+    .header-text h1 {
+      margin: 6px 0 4px 0;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #ff8a80;
+    }
+    .header-text p {
+      margin: 0;
+      font-size: 13px;
+      color: #f8bbd0;
+      max-width: 520px;
+    }
+
+    .games-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .game-card {
+      background: rgba(10, 0, 20, 0.92);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 23, 68, 0.8);
+      box-shadow: 0 0 18px rgba(255, 23, 68, 0.45);
+      padding: 12px 13px 14px 13px;
+      font-size: 13px;
+    }
+    .game-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .game-name {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 12px;
+      color: #ffebee;
+    }
+    .game-tag {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #ff9800;
+      color: #ffcc80;
+    }
+    .game-desc {
+      margin: 0 0 8px 0;
+      color: #ffe6e6;
+      font-size: 12px;
+    }
+    .game-note {
+      font-size: 11px;
+      color: #f8bbd0;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="top">
+      <div class="brand-row">
+        <div class="brand-mark"></div>
+        <span class="brand-text">NURTURE HIGH</span>
+      </div>
+      <nav class="top-menu">
+        <a class="menu-link" href="index.html">Home</a>
+        <a class="menu-link" href="shop.html">Shop</a>
+        <a class="menu-link" href="help.html">Help</a>
+        <a class="menu-link" href="about.html">About</a>
+        <a class="menu-link" href="minigame.html">Minigame</a>
+      </nav>
+    </header>
+
+    <section class="header-text">
+      <h1>Minigames</h1>
+      <p>
+        Experimental trials from the Headmaster. Human or Not and other twisted games will unlock here.
+      </p>
+    </section>
+
+    <section class="games-grid">
+      <article class="game-card">
+        <div class="game-title-row">
+          <div class="game-name">Human or Not</div>
+          <div class="game-tag">Coming soon</div>
+        </div>
+        <p class="game-desc">
+          Stand guard at the dorm door and decide who is allowed in. One wrong judgement and a Visitor slips inside.
+        </p>
+        <p class="game-note">
+          Web version is in development. First playable night will appear here later.
+        </p>
+      </article>
+
+      <article class="game-card">
+        <div class="game-title-row">
+          <div class="game-name">Class Gambit</div>
+          <div class="game-tag">Coming soon</div>
+        </div>
+        <p class="game-desc">
+          A deduction trial where classes gamble points on the truth. Expose liars or drag your whole homeroom down.
+        </p>
+        <p class="game-note">
+          Rules and UI are being prototyped with the student council.
+        </p>
+      </article>
+
+      <article class="game-card">
+        <div class="game-title-row">
+          <div class="game-name">Dorm Raid</div>
+          <div class="game-tag">Coming soon</div>
+        </div>
+        <p class="game-desc">
+          Sneak into rival dorms for intel and contraband without triggering staff patrols or security drones.
+        </p>
+        <p class="game-note">
+          Planned as a co‑op seasonal mini‑game.
+        </p>
+      </article>
+    </section>
+  </div>
+</body>
+</html>
