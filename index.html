@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Nurturing High School</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      color: #ffe6e6;
+      background: url("https://cdn.shoob.gg/images/cards/S/b14c680615518b50adcc3f3a94c7caddbea8a5c921476b0e028dc78f27eaa50a.gifhttps://cdn.shoob.gg/images/cards/S/b14c680615518b50adcc3f3a94c7caddbea8a5c921476b0e028dc78f27eaa50a.gifhttps://cdn.shoob.gg/images/cards/S/b14c680615518b50adcc3f3a94c7caddbea8a5c921476b0e028dc78f27eaa50a.gif") center/cover no-repeat fixed;
+    }
+
+    /* Red / black overlay glow */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 75% 45%, rgba(255, 0, 76, 0.7), transparent 60%),
+        radial-gradient(circle at 10% 80%, rgba(255, 128, 0, 0.4), transparent 60%),
+        rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 18px 40px 28px 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top bar */
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 2px solid #ff1744;
+      box-shadow: 0 0 16px rgba(255, 23, 68, 0.9);
+    }
+    .brand-text {
+      letter-spacing: 0.35em;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #f8bbd0;
+    }
+    .contact-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid #ff1744;
+      background: rgba(5, 0, 10, 0.9);
+      color: #ffe6e6;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    .contact-chip span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #ff5252;
+      box-shadow: 0 0 10px #ff5252;
+    }
+
+    /* Hero split */
+    .hero {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      align-items: center;
+      gap: 30px;
+    }
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+    }
+
+    /* Left side text */
+    .hero-title {
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 0.9;
+      margin: 0 0 18px 0;
+      letter-spacing: 0.08em;
+    }
+    .hero-title .block {
+      display: block;
+      text-transform: uppercase;
+      -webkit-text-stroke: 1px #ff1744;
+      color: transparent;
+    }
+    .accent-line {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #ff5252;
+      margin: 0 0 6px 0;
+    }
+    .accent-sub {
+      font-size: 13px;
+      max-width: 420px;
+      color: #f8bbd0;
+      margin: 0 0 18px 0;
+    }
+
+    .pill-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .pill-links a {
+      padding: 7px 18px;
+      border-radius: 999px;
+      border: 1px solid #ff1744;
+      background: rgba(15, 0, 20, 0.9);
+      color: #ffe6e6;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .pill-links a:hover {
+      background: #ff1744;
+      color: #120003;
+    }
+
+    /* Right side disk HUD */
+    .hero-right {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .disk-wrap {
+      position: relative;
+      width: min(420px, 80vw);
+      aspect-ratio: 1 / 1;
+    }
+    .disk-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 23, 68, 0.95);
+      box-shadow: 0 0 30px rgba(255, 23, 68, 0.95);
+      animation: spin 26s linear infinite;
+    }
+    .disk-ring.outer { inset: 4%; }
+    .disk-ring.mid {
+      inset: 20%;
+      border-color: rgba(255, 111, 0, 0.95);
+      animation-duration: 32s;
+    }
+    .disk-ring.inner {
+      inset: 40%;
+      border-color: #ffeb3b;
+      animation-duration: 40s;
+    }
+    .hud-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff5252;
+      box-shadow: 0 0 14px #ff5252;
+    }
+    .hud-dot.dot1 { top: 12%; right: 14%; }
+    .hud-dot.dot2 { bottom: 16%; left: 18%; }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="page">
+    <header class="top">
+      <div class="brand-row">
+        <div class="brand-mark"></div>
+        <span class="brand-text">NURTURE HIGH</span>
+      </div>
+      <a class="contact-chip" href="https://discord.gg/aTJAfpuWd" target="_blank">
+        <span class="dot"></span>
+        Contact us
+      </a>
+    </header>
+
+    <main class="hero">
+      <section class="hero-left">
+        <h1 class="hero-title">
+          <span class="block">THE</span>
+          <span class="block">ULTIMATE</span>
+          <span class="block">ACADEMY.</span>
+        </h1>
+
+        <p class="accent-line">
+          EXPERIENCE THE SCHOOL REVOLUTION WITH NURTURE HIGH.
+        </p>
+        <p class="accent-sub">
+          Welcome to our nurturing high school, where effort is currency and every choice reshapes your future.
+        </p>
+
+        <nav class="pill-links">
+          <a href="shop.html">Shop</a>
+          <a href="help.html">Help</a>
+          <a href="about.html">About</a>
+        </nav>
+      </section>
+
+      <section class="hero-right">
+        <div class="disk-wrap">
+          <div class="disk-ring outer"></div>
+          <div class="disk-ring mid"></div>
+          <div class="disk-ring inner"></div>
+          <div class="hud-dot dot1"></div>
+          <div class="hud-dot dot2"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
