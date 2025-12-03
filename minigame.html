@@ -15,7 +15,6 @@
       overflow: hidden;
     }
 
-    /* LOOPING BACKGROUND VIDEO (wake-up.mp4, MUTED) */
     .bg-video {
       position: fixed;
       inset: 0;
@@ -124,7 +123,6 @@
       border: 1px solid rgba(0, 255, 200, 0.4);
     }
 
-    /* SMALL FRAME VIDEO – ALWAYS MUTED */
     .scene-video {
       width: 100%;
       height: auto;
@@ -207,7 +205,6 @@ Someone keeps knocking at your door.
     <div id="gameScreen" class="screen">
       <div class="scene-top">
         <div class="scene-video-wrap">
-          <!-- PER-SCENE VIDEO, MUTED -->
           <video id="sceneVideo" class="scene-video" muted playsinline></video>
         </div>
 
@@ -238,29 +235,22 @@ Someone keeps knocking at your door.
     </div>
   </div>
 
-  <!-- BGM: Limbo (Sped Up)(MP3_160K).mp3 -->
+  <!-- BGM -->
   <audio id="bgm" src="audio/Limbo (Sped Up)(MP3_160K).mp3" loop></audio>
 
   <script>
-    /*
-      EXPECTED FILES
-      --------------
-      Folder: media/
-        wake-up.mp4           (looping background and introOnce video)
-        hikari-human.mp4      (visitor 1)
-        makima-human.mp4      (visitor 2)
-        unknown-human.mp4     (visitor 3)
-        bochii-human.mp4      (visitor 4)
-        armin-human.mp4       (visitor 5)
-        miku-human.mp4        (visitor 6)
-        news-outbreak.mp4     (final news video)
-
-      Folder: audio/
-        Limbo (Sped Up)(MP3_160K).mp3
-    */
+    // FILES:
+    // media/hikari-human.mp4
+    // media/makima-human.mp4
+    // media/unknown-human.mp4
+    // media/bochii-human.mp4
+    // media/armin-human.mp4
+    // media/miku-human.mp4
+    // media/wake-up.mp4
+    // media/news-outbreak.mp4
+    // audio/Limbo (Sped Up)(MP3_160K).mp3
 
     const scenes = {
-      // After Start: short intro (we just re-use wake-up.mp4 once)
       introOnce: {
         id: "introOnce",
         video: "media/wake-up.mp4",
@@ -270,7 +260,6 @@ Someone keeps knocking at your door.
         onEnd: "v1Idle"
       },
 
-      // Visitor 1 – Hikari, idle + Play
       v1Idle: {
         id: "v1Idle",
         video: "media/hikari-human.mp4",
@@ -310,7 +299,6 @@ You stay alive.",
         choiceA: { label: "Next", next: "v2" }
       },
 
-      // Visitor 2 – Makima: Are you alone?
       v2: {
         id: "v2",
         video: "media/makima-human.mp4",
@@ -330,7 +318,6 @@ You stay alive.",
         }
       },
 
-      // Visitor 3 – Unknown: We are all connected (wait 2 loops)
       v3: {
         id: "v3",
         video: "media/unknown-human.mp4",
@@ -352,7 +339,6 @@ You stay alive.",
         }
       },
 
-      // Visitor 4 – Bochii: C-can I get in?
       v4: {
         id: "v4",
         video: "media/bochii-human.mp4",
@@ -371,7 +357,6 @@ You stay alive.",
         }
       },
 
-      // Visitor 5 – Armin: Is Armin there? (wait 2 loops)
       v5: {
         id: "v5",
         video: "media/armin-human.mp4",
@@ -393,7 +378,6 @@ You stay alive.",
         }
       },
 
-      // Visitor 6 – Miku: loops 3 times then unlocks outbreak view
       v6ComingSoon: {
         id: "v6ComingSoon",
         video: "media/miku-human.mp4",
@@ -405,29 +389,26 @@ You stay alive.",
       }
     };
 
-    // DOM refs
-    const startScreen   = document.getElementById('startScreen');
-    const gameScreen    = document.getElementById('gameScreen');
-    const outbreakScreen= document.getElementById('outbreakScreen');
-    const startBtn      = document.getElementById('startBtn');
-    const sceneVideo    = document.getElementById('sceneVideo');
-    const outbreakVideo = document.getElementById('outbreakVideo');
-    const qEl           = document.getElementById('question');
-    const statusEl      = document.getElementById('status');
-    const choiceA       = document.getElementById('choiceA');
-    const choiceB       = document.getElementById('choiceB');
-    const hintEl        = document.getElementById('hint');
-    const bgm           = document.getElementById('bgm');
+    const startScreen    = document.getElementById('startScreen');
+    const gameScreen     = document.getElementById('gameScreen');
+    const outbreakScreen = document.getElementById('outbreakScreen');
+    const startBtn       = document.getElementById('startBtn');
+    const sceneVideo     = document.getElementById('sceneVideo');
+    const outbreakVideo  = document.getElementById('outbreakVideo');
+    const qEl            = document.getElementById('question');
+    const statusEl       = document.getElementById('status');
+    const choiceA        = document.getElementById('choiceA');
+    const choiceB        = document.getElementById('choiceB');
+    const hintEl         = document.getElementById('hint');
+    const bgm            = document.getElementById('bgm');
 
     let currentScene = null;
     let loopCount = 0;
 
     function playBgm() {
       if (!bgm) return;
-      try {
-        bgm.volume = 0.6;
-        bgm.play().catch(() => {});
-      } catch (e) {}
+      bgm.volume = 0.6;
+      bgm.play().catch(() => {});
     }
 
     startBtn.onclick = () => {
@@ -443,11 +424,9 @@ You stay alive.",
       loopCount = 0;
       if (!currentScene) return;
 
-      // show correct screen
       outbreakScreen.classList.remove('active');
       gameScreen.classList.add('active');
 
-      // set video (muted already)
       if (currentScene.video) {
         sceneVideo.src = currentScene.video;
         sceneVideo.loop = !!currentScene.loop;
@@ -469,7 +448,6 @@ You stay alive.",
       choiceA.onclick = null;
       choiceB.onclick = null;
 
-      // handle ended: onEnd or requiredLoops
       sceneVideo.onended = () => {
         if (!currentScene) return;
 
@@ -480,13 +458,11 @@ You stay alive.",
             sceneVideo.play();
             return;
           } else {
-            // enough loops watched
             hintEl.textContent = "You feel something watching from the hallway.";
             choiceA.textContent = "Next";
             choiceB.style.display = "none";
 
             if (currentScene.comingSoonUnlocksOutbreak) {
-              // Visitor 6 -> outbreak view
               choiceA.onclick = () => showOutbreak();
             } else if (currentScene.id === "v3") {
               choiceA.onclick = () => goToScene("v4");
