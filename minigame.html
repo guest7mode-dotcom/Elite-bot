@@ -1,196 +1,579 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Nurturing High – Minigames</title>
+  <meta charset="UTF-8">
+  <title>No! I'm Not A Human – Web</title>
   <style>
     * { box-sizing: border-box; }
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-    }
-    body {
-      font-family: system-ui, Arial, sans-serif;
-      color: #ffe6e6;
-      background: url("https://tenor.com/uD6Rx9G3S7F.gif")
-                  center/cover no-repeat fixed;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #aefcff;
+      background: #020508;
+      overflow: hidden;
     }
 
-    .page {
-      min-height: 100vh;
-      padding: 18px 40px 40px 40px;
-      background: rgba(0, 0, 0, 0.55);
+    /* LOOPING BACKGROUND VIDEO (wake-up.mp4, MUTED) */
+    .bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.35) contrast(1.2);
+      z-index: -2;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(0, 255, 200, 0.05), rgba(0,0,0,0.95));
+      z-index: -1;
+    }
+
+    .game-root {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+      gap: 18px;
+      text-align: center;
     }
 
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .brand-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .brand-mark {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      border: 2px solid #ff1744;
-      box-shadow: 0 0 16px rgba(255, 23, 68, 0.9);
-    }
-    .brand-text {
-      letter-spacing: 0.35em;
-      font-size: 11px;
+    .title {
+      font-size: 22px;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: #f8bbd0;
+      color: #7dffef;
     }
 
-    .top-menu {
+    .subtitle {
+      font-size: 13px;
+      color: #9fd4cf;
+      max-width: 460px;
+      white-space: pre-line;
+    }
+
+    .btn {
+      background: rgba(0, 30, 30, 0.9);
+      border: 1px solid #35ffcf;
+      color: #bffff1;
+      padding: 8px 22px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor: pointer;
+      margin: 4px;
+      min-width: 120px;
+    }
+    .btn:hover {
+      background: #35ffcf;
+      color: #001010;
+    }
+
+    .btn-danger {
+      border-color: #ff4e6a;
+      color: #ffe4f1;
+    }
+    .btn-danger:hover {
+      background: #ff4e6a;
+      color: #190006;
+    }
+
+    .btn-disabled, .btn-disabled:hover {
+      opacity: 0.4;
+      cursor: default;
+      pointer-events: none;
+      background: rgba(0, 20, 20, 0.8);
+      border-color: #3b3b3b;
+      color: #6f8280;
+    }
+
+    .screen {
+      width: min(880px, 100%);
+      max-width: 880px;
+      border-radius: 16px;
+      border: 1px solid rgba(90, 255, 210, 0.4);
+      background: radial-gradient(circle at top left, rgba(0, 255, 200, 0.1), rgba(0,0,0,0.96));
+      padding: 16px 18px 18px;
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .screen.active {
       display: flex;
-      gap: 10px;
+    }
+
+    .scene-top {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .scene-video-wrap {
+      flex: 0 0 320px;
+      max-width: 48%;
+      background: radial-gradient(circle at center, #001010, #000000);
+      border-radius: 12px;
+      padding: 6px;
+      border: 1px solid rgba(0, 255, 200, 0.4);
+    }
+
+    /* SMALL FRAME VIDEO – ALWAYS MUTED */
+    .scene-video {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      background: black;
+    }
+
+    .scene-text-wrap {
+      flex: 1;
+      text-align: left;
+      padding: 6px 4px;
+    }
+
+    .question {
+      font-size: 16px;
+      color: #bfffff;
+      margin-bottom: 8px;
+      min-height: 42px;
+      white-space: pre-line;
+    }
+
+    .status {
+      font-size: 12px;
+      color: #9fd4cf;
+      min-height: 34px;
+      white-space: pre-line;
+    }
+
+    .choices {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 6px;
       flex-wrap: wrap;
     }
-    .menu-link {
-      padding: 6px 14px;
-      border-radius: 999px;
-      border: 1px solid #ff1744;
-      background: rgba(5, 0, 10, 0.9);
-      color: #ffe6e6;
-      text-decoration: none;
-      font-size: 12px;
-    }
-    .menu-link:hover {
-      background: #ff1744;
-      color: #120003;
+
+    .start-screen {
+      text-align: center;
     }
 
-    .header-text h1 {
-      margin: 6px 0 4px 0;
-      font-size: 22px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: #ff8a80;
-    }
-    .header-text p {
-      margin: 0;
-      font-size: 13px;
-      color: #f8bbd0;
-      max-width: 520px;
-    }
-
-    .games-grid {
-      margin-top: 10px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-    .game-card {
-      background: rgba(10, 0, 20, 0.92);
-      border-radius: 14px;
-      border: 1px solid rgba(255, 23, 68, 0.8);
-      box-shadow: 0 0 18px rgba(255, 23, 68, 0.45);
-      padding: 12px 13px 14px 13px;
-      font-size: 13px;
-    }
-    .game-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-    .game-name {
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 12px;
-      color: #ffebee;
-    }
-    .game-tag {
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid #ff9800;
-      color: #ffcc80;
-    }
-    .game-desc {
-      margin: 0 0 8px 0;
-      color: #ffe6e6;
-      font-size: 12px;
-    }
-    .game-note {
+    .small-note {
       font-size: 11px;
-      color: #f8bbd0;
-      opacity: 0.85;
+      color: #6c8f8a;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 720px) {
+      .scene-top {
+        flex-direction: column;
+      }
+      .scene-video-wrap {
+        max-width: 100%;
+      }
+      .game-root { padding-inline: 10px; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header class="top">
-      <div class="brand-row">
-        <div class="brand-mark"></div>
-        <span class="brand-text">NURTURE HIGH</span>
-      </div>
-      <nav class="top-menu">
-        <a class="menu-link" href="index.html">Home</a>
-        <a class="menu-link" href="shop.html">Shop</a>
-        <a class="menu-link" href="help.html">Help</a>
-        <a class="menu-link" href="about.html">About</a>
-        <a class="menu-link" href="minigame.html">Minigame</a>
-      </nav>
-    </header>
+  <!-- BACKGROUND VIDEO: wake-up.mp4 LOOP, MUTED -->
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="media/wake-up.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
 
-    <section class="header-text">
-      <h1>Minigames</h1>
-      <p>
-        Experimental trials from the Headmaster. Human or Not and other twisted games will unlock here.
+  <div class="game-root">
+    <!-- START SCREEN -->
+    <div id="startScreen" class="screen active start-screen">
+      <div class="title">NO! I'M NOT A HUMAN</div>
+      <p class="subtitle">
+You wake up in your dorm at Nurturing High.
+Someone keeps knocking at your door.
       </p>
-    </section>
+      <button class="btn" id="startBtn">Start</button>
+      <div class="small-note">
+        Videos are silent. Only the Limbo (sped up) BGM will play.
+      </div>
+    </div>
 
-    <section class="games-grid">
-      <article class="game-card">
-        <div class="game-title-row">
-          <div class="game-name">Human or Not</div>
-          <div class="game-tag">Coming soon</div>
+    <!-- GAME SCREEN -->
+    <div id="gameScreen" class="screen">
+      <div class="scene-top">
+        <div class="scene-video-wrap">
+          <!-- PER-SCENE VIDEO, MUTED -->
+          <video id="sceneVideo" class="scene-video" muted playsinline></video>
         </div>
-        <p class="game-desc">
-          Stand guard at the dorm door and decide who is allowed in. One wrong judgement and a Visitor slips inside.
-        </p>
-        <p class="game-note">
-          Web version is in development. First playable night will appear here later.
-        </p>
-      </article>
 
-      <article class="game-card">
-        <div class="game-title-row">
-          <div class="game-name">Class Gambit</div>
-          <div class="game-tag">Coming soon</div>
+        <div class="scene-text-wrap">
+          <div id="question" class="question"></div>
+          <div id="status" class="status"></div>
         </div>
-        <p class="game-desc">
-          A deduction trial where classes gamble points on the truth. Expose liars or drag your whole homeroom down.
-        </p>
-        <p class="game-note">
-          Rules and UI are being prototyped with the student council.
-        </p>
-      </article>
+      </div>
 
-      <article class="game-card">
-        <div class="game-title-row">
-          <div class="game-name">Dorm Raid</div>
-          <div class="game-tag">Coming soon</div>
+      <div class="choices">
+        <button id="choiceA" class="btn"></button>
+        <button id="choiceB" class="btn btn-danger"></button>
+      </div>
+
+      <div class="small-note" id="hint"></div>
+    </div>
+
+    <!-- OUTBREAK VIEW -->
+    <div id="outbreakScreen" class="screen">
+      <div class="scene-top" style="justify-content:center; flex-direction:column; align-items:center;">
+        <div style="font-size:18px; color:#bfffff; margin-bottom:10px;">
+          Close your door
         </div>
-        <p class="game-desc">
-          Sneak into rival dorms for intel and contraband without triggering staff patrols or security drones.
-        </p>
-        <p class="game-note">
-          Planned as a co‑op seasonal mini‑game.
-        </p>
-      </article>
-    </section>
+        <div class="scene-video-wrap" style="max-width:60%;">
+          <video id="outbreakVideo" class="scene-video" muted playsinline></video>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- BGM: Limbo (Sped Up)(MP3_160K).mp3 -->
+  <audio id="bgm" src="audio/Limbo (Sped Up)(MP3_160K).mp3" loop></audio>
+
+  <script>
+    /*
+      EXPECTED FILES
+      --------------
+      Folder: media/
+        wake-up.mp4           (looping background and introOnce video)
+        hikari-human.mp4      (visitor 1)
+        makima-human.mp4      (visitor 2)
+        unknown-human.mp4     (visitor 3)
+        bochii-human.mp4      (visitor 4)
+        armin-human.mp4       (visitor 5)
+        miku-human.mp4        (visitor 6)
+        news-outbreak.mp4     (final news video)
+
+      Folder: audio/
+        Limbo (Sped Up)(MP3_160K).mp3
+    */
+
+    const scenes = {
+      // After Start: short intro (we just re-use wake-up.mp4 once)
+      introOnce: {
+        id: "introOnce",
+        video: "media/wake-up.mp4",
+        loop: false,
+        question: "You wake up. The knocking doesn't stop.",
+        status: "",
+        onEnd: "v1Idle"
+      },
+
+      // Visitor 1 – Hikari, idle + Play
+      v1Idle: {
+        id: "v1Idle",
+        video: "media/hikari-human.mp4",
+        loop: true,
+        question: "A girl with a cat stares at your door.",
+        status: "She hasn't stopped banging on it.",
+        choiceA: { label: "Talk to her", next: "v1Talk" },
+        choiceB: { label: "Ignore her", next: "v1Talk" }
+      },
+
+      v1Talk: {
+        id: "v1Talk",
+        video: "media/hikari-human.mp4",
+        loop: true,
+        question: "We need your help, please.",
+        status: "",
+        choiceA: { label: "Yes, come in.", next: "v1Saved" },
+        choiceB: { label: "No.", next: "v1Dead" }
+      },
+
+      v1Saved: {
+        id: "v1Saved",
+        video: "media/hikari-human.mp4",
+        loop: true,
+        question: "You step aside. She slips into the room.",
+        status: "You have successfully saved a survivor.",
+        choiceA: { label: "Next", next: "v2" }
+      },
+
+      v1Dead: {
+        id: "v1Dead",
+        video: "media/hikari-human.mp4",
+        loop: true,
+        question: "You shut the door in her face.",
+        status: "The visitor dies out in the hallway.
+You stay alive.",
+        choiceA: { label: "Next", next: "v2" }
+      },
+
+      // Visitor 2 – Makima: Are you alone?
+      v2: {
+        id: "v2",
+        video: "media/makima-human.mp4",
+        loop: true,
+        question: "Are you alone?",
+        status: "",
+        choiceA: {
+          label: "Yes, I am.",
+          death: true,
+          deathText: "She smiles. "Thanks." The world cuts to black.",
+          next: "restart"
+        },
+        choiceB: {
+          label: "I'm not.",
+          nextText: "She sighs. "Oh…" and walks away.",
+          next: "v3"
+        }
+      },
+
+      // Visitor 3 – Unknown: We are all connected (wait 2 loops)
+      v3: {
+        id: "v3",
+        video: "media/unknown-human.mp4",
+        loop: false,
+        requiredLoops: 2,
+        question: "We are all connected.",
+        status: "Maybe say something… or wait.",
+        choiceA: {
+          label: "What?",
+          death: true,
+          deathText: ""I knew it. You're in there."",
+          next: "restart"
+        },
+        choiceB: {
+          label: "We are.",
+          death: true,
+          deathText: ""I knew it. You're in there."",
+          next: "restart"
+        }
+      },
+
+      // Visitor 4 – Bochii: C-can I get in?
+      v4: {
+        id: "v4",
+        video: "media/bochii-human.mp4",
+        loop: true,
+        question: "C-can I get in?",
+        status: "",
+        choiceA: {
+          label: "Sure.",
+          nextText: "You let her in. For now, you both survive.",
+          next: "v5"
+        },
+        choiceB: {
+          label: "Are you okay?",
+          statusAfter: "You were too late. She collapses in the doorway.",
+          next: "v5"
+        }
+      },
+
+      // Visitor 5 – Armin: Is Armin there? (wait 2 loops)
+      v5: {
+        id: "v5",
+        video: "media/armin-human.mp4",
+        loop: false,
+        requiredLoops: 2,
+        question: "Is Armin there?",
+        status: "Answering feels dangerous.",
+        choiceA: {
+          label: "Who's that?",
+          death: true,
+          deathText: ""Knew it. A person is here."",
+          next: "restart"
+        },
+        choiceB: {
+          label: "No.",
+          death: true,
+          deathText: ""Knew it. A person is here."",
+          next: "restart"
+        }
+      },
+
+      // Visitor 6 – Miku: loops 3 times then unlocks outbreak view
+      v6ComingSoon: {
+        id: "v6ComingSoon",
+        video: "media/miku-human.mp4",
+        loop: false,
+        requiredLoops: 3,
+        question: "The final visitor won't answer your questions.",
+        status: "Visitor 6 is just standing there.",
+        comingSoonUnlocksOutbreak: true
+      }
+    };
+
+    // DOM refs
+    const startScreen   = document.getElementById('startScreen');
+    const gameScreen    = document.getElementById('gameScreen');
+    const outbreakScreen= document.getElementById('outbreakScreen');
+    const startBtn      = document.getElementById('startBtn');
+    const sceneVideo    = document.getElementById('sceneVideo');
+    const outbreakVideo = document.getElementById('outbreakVideo');
+    const qEl           = document.getElementById('question');
+    const statusEl      = document.getElementById('status');
+    const choiceA       = document.getElementById('choiceA');
+    const choiceB       = document.getElementById('choiceB');
+    const hintEl        = document.getElementById('hint');
+    const bgm           = document.getElementById('bgm');
+
+    let currentScene = null;
+    let loopCount = 0;
+
+    function playBgm() {
+      if (!bgm) return;
+      try {
+        bgm.volume = 0.6;
+        bgm.play().catch(() => {});
+      } catch (e) {}
+    }
+
+    startBtn.onclick = () => {
+      playBgm();
+      startScreen.classList.remove('active');
+      outbreakScreen.classList.remove('active');
+      gameScreen.classList.add('active');
+      goToScene('introOnce');
+    };
+
+    function goToScene(id) {
+      currentScene = scenes[id];
+      loopCount = 0;
+      if (!currentScene) return;
+
+      // show correct screen
+      outbreakScreen.classList.remove('active');
+      gameScreen.classList.add('active');
+
+      // set video (muted already)
+      if (currentScene.video) {
+        sceneVideo.src = currentScene.video;
+        sceneVideo.loop = !!currentScene.loop;
+        sceneVideo.load();
+        sceneVideo.play().catch(() => {});
+      } else {
+        sceneVideo.removeAttribute('src');
+        sceneVideo.load();
+      }
+
+      qEl.textContent = currentScene.question || "";
+      statusEl.textContent = currentScene.status || "";
+      hintEl.textContent = "";
+
+      choiceA.style.display = "inline-block";
+      choiceB.style.display = "inline-block";
+      choiceA.className = "btn";
+      choiceB.className = "btn btn-danger";
+      choiceA.onclick = null;
+      choiceB.onclick = null;
+
+      // handle ended: onEnd or requiredLoops
+      sceneVideo.onended = () => {
+        if (!currentScene) return;
+
+        if (currentScene.requiredLoops) {
+          loopCount++;
+          if (loopCount < currentScene.requiredLoops) {
+            sceneVideo.currentTime = 0;
+            sceneVideo.play();
+            return;
+          } else {
+            // enough loops watched
+            hintEl.textContent = "You feel something watching from the hallway.";
+            choiceA.textContent = "Next";
+            choiceB.style.display = "none";
+
+            if (currentScene.comingSoonUnlocksOutbreak) {
+              // Visitor 6 -> outbreak view
+              choiceA.onclick = () => showOutbreak();
+            } else if (currentScene.id === "v3") {
+              choiceA.onclick = () => goToScene("v4");
+            } else if (currentScene.id === "v5") {
+              choiceA.onclick = () => goToScene("v6ComingSoon");
+            }
+            return;
+          }
+        }
+
+        if (currentScene.onEnd) {
+          goToScene(currentScene.onEnd);
+        }
+      };
+
+      setupButtonsForScene(currentScene);
+    }
+
+    function setupButtonsForScene(scene) {
+      const a = scene.choiceA;
+      const b = scene.choiceB;
+
+      if (!a && !b) {
+        choiceA.style.display = "none";
+        choiceB.style.display = "none";
+        return;
+      }
+
+      if (a) {
+        choiceA.textContent = a.label || "A";
+        choiceA.onclick = () => handleChoice(a);
+      } else {
+        choiceA.style.display = "none";
+      }
+
+      if (b) {
+        choiceB.textContent = b.label || "B";
+        choiceB.onclick = () => handleChoice(b);
+      } else {
+        choiceB.style.display = "none";
+      }
+    }
+
+    function handleChoice(choice) {
+      if (choice.next === "restart" || choice.death) {
+        deathScene(choice.deathText || "You died.");
+        return;
+      }
+
+      if (choice.nextText) {
+        statusEl.textContent = choice.nextText;
+      }
+      if (choice.statusAfter) {
+        statusEl.textContent = choice.statusAfter;
+      }
+
+      if (choice.next) {
+        goToScene(choice.next);
+      }
+    }
+
+    function deathScene(text) {
+      sceneVideo.removeAttribute('src');
+      sceneVideo.load();
+      qEl.textContent = "The knocking stops.";
+      statusEl.textContent = text;
+
+      choiceA.textContent = "Restart night";
+      choiceB.textContent = "Back to menu";
+
+      choiceA.onclick = () => goToScene("introOnce");
+      choiceB.onclick = () => {
+        gameScreen.classList.remove('active');
+        outbreakScreen.classList.remove('active');
+        startScreen.classList.add('active');
+      };
+    }
+
+    function showOutbreak() {
+      gameScreen.classList.remove('active');
+      outbreakScreen.classList.add('active');
+
+      outbreakVideo.src = "media/news-outbreak.mp4";
+      outbreakVideo.loop = false;
+      outbreakVideo.load();
+      outbreakVideo.play().catch(() => {});
+    }
+  </script>
 </body>
 </html>
