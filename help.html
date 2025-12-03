@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Nurturing High – Help</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      color: #ffe6e6;
+      background: url("https://cdn.shoob.gg/images/cards/S/b58f9951be5b32cc0604c8f81b4710b50b53baafe65df82ce5ce86c026c1777d.gif")
+                  center/cover no-repeat fixed;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 20px 24px 28px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .top {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .brand {
+      letter-spacing: 0.3em;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #f8bbd0;
+    }
+    .nav-back a {
+      color: #ff8a80;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .nav-back a:hover {
+      text-decoration: underline;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 10px;
+      background: rgba(10, 0, 20, 0.9);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 23, 68, 0.8);
+      box-shadow: 0 0 24px rgba(255, 23, 68, 0.5);
+      padding: 18px 18px 22px 18px;
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #ff8a80;
+    }
+    .subtitle {
+      margin: 0 0 16px 0;
+      font-size: 13px;
+      color: #f8bbd0;
+    }
+
+    .section-title {
+      margin: 16px 0 6px 0;
+      font-size: 15px;
+      color: #ff5252;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    ul {
+      margin: 0 0 4px 18px;
+      padding: 0;
+      font-size: 13px;
+      color: #ffe6e6;
+    }
+
+    .discord-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 1px solid #ff1744;
+      background: rgba(20, 0, 30, 0.9);
+      color: #ffe6e6;
+      text-decoration: none;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .discord-btn span.dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #43ff64;
+      box-shadow: 0 0 10px #43ff64;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="page">
+    <header class="top">
+      <div class="brand">NURTURE HIGH – HELP</div>
+      <div class="nav-back">
+        <a href="index.html">← Back to main site</a>
+      </div>
+    </header>
+
+    <section class="box">
+      <h1>Need Help?</h1>
+      <p class="subtitle">
+        If you are confused about points, classes, cards or punishments, use these steps to get support.
+      </p>
+
+      <h2 class="section-title">1. Basic questions</h2>
+      <ul>
+        <li>Check the <strong>rules channel</strong> in Discord for regulations and examples.</li>
+        <li>Use commands like <code>!help</code> or <code>!rules</code> inside the server to see bot help.</li>
+      </ul>
+
+      <h2 class="section-title">2. Open a ticket</h2>
+      <ul>
+        <li>If something is bugged or unfair, open a support ticket in the <strong>Headmaster / Help</strong> channel.</li>
+        <li>Explain what happened, which command you used, and attach screenshots if possible.</li>
+      </ul>
+
+      <h2 class="section-title">3. Contact staff directly</h2>
+      <ul>
+        <li>Only ping staff for serious issues (exploits, harassment, account problems).</li>
+        <li>Do not spam DMs or channels; one clear report is enough.</li>
+      </ul>
+
+      <a class="discord-btn" href="https://discord.gg/aTJAfpuWd" target="_blank">
+        <span class="dot"></span>
+        Open Discord Support
+      </a>
+    </section>
+  </div>
+</body>
+</html>
