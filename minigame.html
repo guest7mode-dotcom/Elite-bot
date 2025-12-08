@@ -1,555 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>No! I'm Not A Human – Web</title>
-  <style>
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #aefcff;
-      background: #020508;
-      overflow: hidden;
-    }
-
-    .bg-video {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.35) contrast(1.2);
-      z-index: -2;
-    }
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at center, rgba(0, 255, 200, 0.05), rgba(0,0,0,0.95));
-      z-index: -1;
-    }
-
-    .game-root {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      padding: 20px;
-      gap: 18px;
-      text-align: center;
-    }
-
-    .title {
-      font-size: 22px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #7dffef;
-    }
-
-    .subtitle {
-      font-size: 13px;
-      color: #9fd4cf;
-      max-width: 460px;
-      white-space: pre-line;
-    }
-
-    .btn {
-      background: rgba(0, 30, 30, 0.9);
-      border: 1px solid #35ffcf;
-      color: #bffff1;
-      padding: 8px 22px;
-      border-radius: 999px;
-      font-size: 13px;
-      cursor: pointer;
-      margin: 4px;
-      min-width: 120px;
-    }
-    .btn:hover {
-      background: #35ffcf;
-      color: #001010;
-    }
-
-    .btn-danger {
-      border-color: #ff4e6a;
-      color: #ffe4f1;
-    }
-    .btn-danger:hover {
-      background: #ff4e6a;
-      color: #190006;
-    }
-
-    .btn-disabled, .btn-disabled:hover {
-      opacity: 0.4;
-      cursor: default;
-      pointer-events: none;
-      background: rgba(0, 20, 20, 0.8);
-      border-color: #3b3b3b;
-      color: #6f8280;
-    }
-
-    .screen {
-      width: min(880px, 100%);
-      max-width: 880px;
-      border-radius: 16px;
-      border: 1px solid rgba(90, 255, 210, 0.4);
-      background: radial-gradient(circle at top left, rgba(0, 255, 200, 0.1), rgba(0,0,0,0.96));
-      padding: 16px 18px 18px;
-      display: none;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .screen.active {
-      display: flex;
-    }
-
-    .scene-top {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .scene-video-wrap {
-      flex: 0 0 320px;
-      max-width: 48%;
-      background: radial-gradient(circle at center, #001010, #000000);
-      border-radius: 12px;
-      padding: 6px;
-      border: 1px solid rgba(0, 255, 200, 0.4);
-    }
-
-    .scene-video {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      background: black;
-    }
-
-    .scene-text-wrap {
-      flex: 1;
-      text-align: left;
-      padding: 6px 4px;
-    }
-
-    .question {
-      font-size: 16px;
-      color: #bfffff;
-      margin-bottom: 8px;
-      min-height: 42px;
-      white-space: pre-line;
-    }
-
-    .status {
-      font-size: 12px;
-      color: #9fd4cf;
-      min-height: 34px;
-      white-space: pre-line;
-    }
-
-    .choices {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 6px;
-      flex-wrap: wrap;
-    }
-
-    .start-screen {
-      text-align: center;
-    }
-
-    .small-note {
-      font-size: 11px;
-      color: #6c8f8a;
-      margin-top: 6px;
-    }
-
-    @media (max-width: 720px) {
-      .scene-top {
-        flex-direction: column;
-      }
-      .scene-video-wrap {
-        max-width: 100%;
-      }
-      .game-root { padding-inline: 10px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕵️ DETECTIVE NOIR - ONE TIME 100PT GAME</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(180deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            background: rgba(255,107,53,0.15);
+            border: 3px solid #ff6b35;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(255,107,53,0.3);
+        }
+        h1 { 
+            color: #ff6b35; 
+            font-size: 2.5em; 
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            margin-bottom: 10px;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            font-size: 1.3em;
+            margin-top: 15px;
+        }
+        .stat { 
+            background: rgba(255,255,255,0.1); 
+            padding: 10px 20px; 
+            border-radius: 10px;
+            border: 1px solid #ffcc00;
+        }
+        .scene {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            border: 2px solid #ff6b35;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .scene::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 70%);
+            animation: fog 20s infinite linear;
+        }
+        @keyframes fog {
+            0% { transform: translate(0,0) rotate(0deg); }
+            100% { transform: translate(50px,50px) rotate(360deg); }
+        }
+        .scene h2 { 
+            color: #ffcc00; 
+            font-size: 2em; 
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .scene-text {
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+            position: relative;
+            z-index: 1;
+        }
+        ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        li {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ff6b35 100%);
+            padding: 20px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-weight: bold;
+            font-size: 1.1em;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        li:hover::before { left: 100%; }
+        li:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(255,107,53,0.6);
+            border-color: #fff;
+        }
+        li:active { transform: translateY(-4px) scale(1.01); }
+        .victory { border-color: #2ed573 !important; background: rgba(46,213,115,0.2) !important; }
+        .game-over { border-color: #ff4757 !important; background: rgba(255,71,87,0.2) !important; }
+        .final { 
+            text-align: center; 
+            font-size: 2em; 
+            color: #ffcc00; 
+            padding: 40px;
+            background: rgba(255,204,0,0.1);
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        .points-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: #2ed573;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .locked { pointer-events: none; opacity: 0.5; }
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .scene { padding: 25px; }
+            li { padding: 15px 20px; font-size: 1em; }
+        }
+    </style>
 </head>
 <body>
-  <!-- BACKGROUND VIDEO: wake-up.mp4 LOOP, MUTED -->
-  <video class="bg-video" autoplay muted loop playsinline>
-    <source src="media/wake-up.mp4" type="video/mp4">
-  </video>
-  <div class="overlay"></div>
+    <div class="points-display" id="pointsDisplay">Choices: 0/10</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🕵️ DETECTIVE NOIR: STOLEN TIMEPIECE</h1>
+            <p style="font-size: 1.2em; color: #ffcc00;">🔒 ONE TIME ONLY | 10 Choices → 5 Endings | Points at END</p>
+            <div class="stats">
+                <div class="stat">⏳ Choices Left: <span id="choicesLeft">10</span></div>
+                <div class="stat">🎯 Path: <span id="pathCount">0</span></div>
+            </div>
+        </div>
 
-  <div class="game-root">
-    <!-- START SCREEN -->
-    <div id="startScreen" class="screen active start-screen">
-      <div class="title">NO! I'M NOT A HUMAN</div>
-      <p class="subtitle">
-You wake up in your dorm at Nurturing High.
-Someone keeps knocking at your door.
-      </p>
-      <button class="btn" id="startBtn">Start</button>
-      <div class="small-note">
-        Videos are silent. Only the Limbo (sped up) BGM will play.
-      </div>
+        <div id="gameContainer">
+            <div id="currentScene" class="scene">
+                <h2>🌫️ SCENE 1: MANSION GATES</h2>
+                <div class="scene-text">
+                    <p>Fog rolls thick through Veridian City. The Governor's priceless <strong>antique timepiece</strong> - worth 3 million - vanished from his fortified mansion at midnight.</p>
+                    <p>Two guards sweat nervously at the iron gates. Flickering lights pulse through velvet curtains inside. Distant dog barks echo. <strong>Your move, Detective.</strong></p>
+                </div>
+                <ul>
+                    <li onclick="selectChoice(1,1)">🚪 <strong>INTERROGATE GUARDS</strong> - Get staff intel</li>
+                    <li onclick="selectChoice(1,2)">🔦 <strong>SEARCH PERIMETER</strong> - Physical evidence</li>
+                    <li onclick="selectChoice(1,3)">🏃 <strong>FORCE ENTRY</strong> - Confront directly</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
-    <!-- GAME SCREEN -->
-    <div id="gameScreen" class="screen">
-      <div class="scene-top">
-        <div class="scene-video-wrap">
-          <video id="sceneVideo" class="scene-video" muted playsinline></video>
-        </div>
+    <script>
+        let choicesMade = 0;
+        let maxChoices = 10;
+        let gameEnded = false;
+        let playerPath = [];
+        let finalPoints = 0;
 
-        <div class="scene-text-wrap">
-          <div id="question" class="question"></div>
-          <div id="status" class="status"></div>
-        </div>
-      </div>
+        const GAME_DATA = {
+            scenes: {
+                '1-1': {
+                    title: "🗣️ GUARD INTERROGATION",
+                    story: [
+                        "Guards crack under pressure. 'Maid left at 11:45pm. Gardener argued with Governor yesterday.'",
+                        "One whispers: 'Heard digging sounds from garden shed around midnight.' Suspicious."
+                    ],
+                    choices: [
+                        { text: "👤 Track down maid", next: "2-1" },
+                        { text: "🌿 Investigate garden shed", next: "2-2" },
+                        { text: "🚪 Bypass guards → mansion", next: "2-3" }
+                    ]
+                },
+                '1-2': {
+                    title: "🔍 PERIMETER EVIDENCE",
+                    story: [
+                        "Flashlight reveals <strong>fresh bootprints</strong> circling to back fence. Broken wire + <strong>red fabric scrap</strong> caught.",
+                        "Tire marks in mud suggest quick getaway vehicle. Professional job."
+                    ],
+                    choices: [
+                        { text: "👣 Follow bootprints", next: "2-4" },
+                        { text: "🧵 Analyze red fabric", next: "2-5" },
+                        { text: "🏠 Breach through fence", next: "2-3" }
+                    ]
+                },
+                '1-3': {
+                    title: "⚡ DIRECT ASSAULT",
+                    story: [
+                        "You shoulder through main doors. Butler drops silver tray in panic. 'Safe's EMPTY!'",
+                        "Governor's voice thunders from study: 'DETECTIVE! MY HEIRLOOM!' Chaos reigns."
+                    ],
+                    choices: [
+                        { text: "🧑‍💼 Grill terrified butler", next: "2-1" },
+                        { text: "📜 Confront raging Governor", next: "2-6" },
+                        { text: "🔒 Secure empty safe first", next: "2-3" }
+                    ]
+                },
 
-      <div class="choices">
-        <button id="choiceA" class="btn"></button>
-        <button id="choiceB" class="btn btn-danger"></button>
-      </div>
+                '2-1': {
+                    title: "👩‍🍳 THE NERVOUS MAID",
+                    story: [
+                        "Maid twists apron, eyes darting. 'I-I saw gardener near safe!' Slips you <strong>gold key</strong>.",
+                        "'Found it under doormat. Please don't tell Governor!' Gold key glints mysteriously."
+                    ],
+                    choices: [
+                        { text: "🔑 Test gold key immediately", next: "3-1" },
+                        { text: "❓ Extract more details", next: "3-2" },
+                        { text: "👋 Dismiss → keep moving", next: "3-3" }
+                    ]
+                },
+                '2-2': {
+                    title: "🌱 GARDENER'S SHED",
+                    story: [
+                        "<strong>Red jacket</strong> hanging inside matches your fabric scrap perfectly. Fresh dirt mound + scattered shovels.",
+                        "Bootprints match perimeter evidence. Someone dug here recently - recently."
+                    ],
+                    choices: [
+                        { text: "⛏️ Dig fresh dirt mound", next: "3-4" },
+                        { text: "👕 Search red jacket pockets", next: "3-5" },
+                        { text: "🚪 Abandon shed → mansion", next: "3-3" }
+                    ]
+                },
+                '2-3': {
+                    title: "🏛️ MANSION INTERIOR",
+                    story: [
+                        "Heavy Persian rugs hide <strong>scuff marks</strong> leading toward oak-paneled study. Air smells of expensive cigar smoke.",
+                        "Faint metallic click echoes from upstairs. Clock ticking somewhere... or a trap?"
+                    ],
+                    choices: [
+                        { text: "📚 Follow scuff trail", next: "3-6" },
+                        { text: "🔍 Check wall panels", next: "3-1" },
+                        { text: "⬆️ Ascend to upstairs", next: "3-3" }
+                    ]
+                },
+                '2-4': {
+                    title: "👣 BOOTPRINT TRAIL",
+                    story: [
+                        "Prints lead to <strong>smashed greenhouse window</strong>. Shards glitter like diamonds in moonlight.",
+                        "Inside: overturned pots, muddy bootprints continue toward mansion proper."
+                    ],
+                    choices: [
+                        { text: "🪟 Enter greenhouse", next: "3-7" },
+                        { text: "🔍 Window frame fibers", next: "3-5" },
+                        { text: "👣 Track indoor prints", next: "3-3" }
+                    ]
+                },
+                '2-5': {
+                    title: "🧵 RED FABRIC CLUE",
+                    story: [
+                        "Fabric = expensive Italian wool. Matches Governor's private tailor. Inside joke among staff.",
+                        "Points finger toward someone with mansion access, not outsider."
+                    ],
+                    choices: [
+                        { text: "👨‍🌾 Confront gardener", next: "3-4" },
+                        { text: "🔒 Check staff quarters", next: "3-8" },
+                        { text: "🏠 Skip → main house", next: "3-3" }
+                    ]
+                },
+                '2-6': {
+                    title: "👨‍💼 GOVERNOR'S FURY",
+                    story: [
+                        "'My family heirloom since 1792!' Points to desk drawer. 'Secret compartment!' Voice cracks with rage.",
+                        "Desk shows fresh scratches. Someone forced it recently."
+                    ],
+                    choices: [
+                        { text: "📂 Force secret drawer", next: "3-9" },
+                        { text: "❓ Suspect list from Governor", next: "3-2" },
+                        { text: "🚪 Leave him → investigate", next: "3-3" }
+                    ]
+                },
 
-      <div class="small-note" id="hint"></div>
-    </div>
+                // Scene 3 (Choices 7-10 lead here or to endings)
+                '3-1': { title: "🔑 GOLD KEY MYSTERY", story: ["Key fits bookshelf lock perfectly. <strong>Compartment sticks</strong>."], choices: [{text:"💪 Force compartment", next:"END1"}, {text:"🔍 Check for mechanisms", next:"END3"}] },
+                '3-2': { title: "❓ QUESTIONING FAIL", story: ["Person lawyers up. 'I want attorney!' Stonewall complete."], choices: [{text:"💥 Intimidate harder", next:"END2"}, {text:"🙏 Apologize + leave", next:"END4"}] },
+                '3-3': { title: "🚶 DEAD END HALLWAY", story: ["Footsteps fade. You lost the trail completely."], choices: [{text:"😤 Admit defeat", next:"END2"}] },
+                '3-4': { title: "⛏️ TUNNEL DISCOVERY", story: ["Narrow dirt tunnel under foundation. Recently dug."], choices: [{text:"🚶 Enter tunnel", next:"END4"}, {text:"👮 Call forensics", next:"END3"}] },
+                '3-5': { title: "📝 INC RIMINATING NOTE", story: ["'Midnight - old oak tree - bring merchandise' Unsigned."], choices: [{text:"🌳 Stakeout oak tree", next:"END5"}] },
+                '3-6': { title: "📚 BOOKSHELF CLUES", story: ["Spine titles spell safe combination: 1-7-9-2"], choices: [{text:"🔢 Try combination", next:"END1"}] },
+                '3-7': { title: "🪟 GREENHOUSE BREACH", story: ["Ransacked potting shed. Safe door ajar upstairs."], choices: [{text:"🔒 Check ajar safe", next:"END2"}] },
+                '3-8': { title: "🛏️ STAFF QUARTERS", story: ["Maid's room: packed suitcase, train ticket dated tomorrow."], choices: [{text:"🚨 Arrest fleeing maid", next:"END5"}] },
+                '3-9': { title: "📂 SECRET DRAWER", story: ["Stuck drawer contains <strong>timepiece box</strong> - empty."], choices: [{text:"🎁 Box fingerprints", next:"END1"}] },
 
-    <!-- OUTBREAK VIEW -->
-    <div id="outbreakScreen" class="screen">
-      <div class="scene-top" style="justify-content:center; flex-direction:column; align-items:center;">
-        <div style="font-size:18px; color:#bfffff; margin-bottom:10px;">
-          Close your door
-        </div>
-        <div class="scene-video-wrap" style="max-width:60%;">
-          <video id="outbreakVideo" class="scene-video" muted playsinline></video>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BGM -->
-  <audio id="bgm" src="audio/Limbo (Sped Up)(MP3_160K).mp3" loop></audio>
-
-  <script>
-    // FILES:
-    // media/hikari-human.mp4
-    // media/makima-human.mp4
-    // media/unknown-human.mp4
-    // media/bochii-human.mp4
-    // media/armin-human.mp4
-    // media/miku-human.mp4
-    // media/wake-up.mp4
-    // media/news-outbreak.mp4
-    // audio/Limbo (Sped Up)(MP3_160K).mp3
-
-    const scenes = {
-      introOnce: {
-        id: "introOnce",
-        video: "media/wake-up.mp4",
-        loop: false,
-        question: "You wake up. The knocking doesn't stop.",
-        status: "",
-        onEnd: "v1Idle"
-      },
-
-      v1Idle: {
-        id: "v1Idle",
-        video: "media/hikari-human.mp4",
-        loop: true,
-        question: "A girl with a cat stares at your door.",
-        status: "She hasn't stopped banging on it.",
-        choiceA: { label: "Talk to her", next: "v1Talk" },
-        choiceB: { label: "Ignore her", next: "v1Talk" }
-      },
-
-      v1Talk: {
-        id: "v1Talk",
-        video: "media/hikari-human.mp4",
-        loop: true,
-        question: "We need your help, please.",
-        status: "",
-        choiceA: { label: "Yes, come in.", next: "v1Saved" },
-        choiceB: { label: "No.", next: "v1Dead" }
-      },
-
-      v1Saved: {
-        id: "v1Saved",
-        video: "media/hikari-human.mp4",
-        loop: true,
-        question: "You step aside. She slips into the room.",
-        status: "You have successfully saved a survivor.",
-        choiceA: { label: "Next", next: "v2" }
-      },
-
-      v1Dead: {
-        id: "v1Dead",
-        video: "media/hikari-human.mp4",
-        loop: true,
-        question: "You shut the door in her face.",
-        status: "The visitor dies out in the hallway.
-You stay alive.",
-        choiceA: { label: "Next", next: "v2" }
-      },
-
-      v2: {
-        id: "v2",
-        video: "media/makima-human.mp4",
-        loop: true,
-        question: "Are you alone?",
-        status: "",
-        choiceA: {
-          label: "Yes, I am.",
-          death: true,
-          deathText: "She smiles. "Thanks." The world cuts to black.",
-          next: "restart"
-        },
-        choiceB: {
-          label: "I'm not.",
-          nextText: "She sighs. "Oh…" and walks away.",
-          next: "v3"
-        }
-      },
-
-      v3: {
-        id: "v3",
-        video: "media/unknown-human.mp4",
-        loop: false,
-        requiredLoops: 2,
-        question: "We are all connected.",
-        status: "Maybe say something… or wait.",
-        choiceA: {
-          label: "What?",
-          death: true,
-          deathText: ""I knew it. You're in there."",
-          next: "restart"
-        },
-        choiceB: {
-          label: "We are.",
-          death: true,
-          deathText: ""I knew it. You're in there."",
-          next: "restart"
-        }
-      },
-
-      v4: {
-        id: "v4",
-        video: "media/bochii-human.mp4",
-        loop: true,
-        question: "C-can I get in?",
-        status: "",
-        choiceA: {
-          label: "Sure.",
-          nextText: "You let her in. For now, you both survive.",
-          next: "v5"
-        },
-        choiceB: {
-          label: "Are you okay?",
-          statusAfter: "You were too late. She collapses in the doorway.",
-          next: "v5"
-        }
-      },
-
-      v5: {
-        id: "v5",
-        video: "media/armin-human.mp4",
-        loop: false,
-        requiredLoops: 2,
-        question: "Is Armin there?",
-        status: "Answering feels dangerous.",
-        choiceA: {
-          label: "Who's that?",
-          death: true,
-          deathText: ""Knew it. A person is here."",
-          next: "restart"
-        },
-        choiceB: {
-          label: "No.",
-          death: true,
-          deathText: ""Knew it. A person is here."",
-          next: "restart"
-        }
-      },
-
-      v6ComingSoon: {
-        id: "v6ComingSoon",
-        video: "media/miku-human.mp4",
-        loop: false,
-        requiredLoops: 3,
-        question: "The final visitor won't answer your questions.",
-        status: "Visitor 6 is just standing there.",
-        comingSoonUnlocksOutbreak: true
-      }
-    };
-
-    const startScreen    = document.getElementById('startScreen');
-    const gameScreen     = document.getElementById('gameScreen');
-    const outbreakScreen = document.getElementById('outbreakScreen');
-    const startBtn       = document.getElementById('startBtn');
-    const sceneVideo     = document.getElementById('sceneVideo');
-    const outbreakVideo  = document.getElementById('outbreakVideo');
-    const qEl            = document.getElementById('question');
-    const statusEl       = document.getElementById('status');
-    const choiceA        = document.getElementById('choiceA');
-    const choiceB        = document.getElementById('choiceB');
-    const hintEl         = document.getElementById('hint');
-    const bgm            = document.getElementById('bgm');
-
-    let currentScene = null;
-    let loopCount = 0;
-
-    function playBgm() {
-      if (!bgm) return;
-      bgm.volume = 0.6;
-      bgm.play().catch(() => {});
-    }
-
-    startBtn.onclick = () => {
-      playBgm();
-      startScreen.classList.remove('active');
-      outbreakScreen.classList.remove('active');
-      gameScreen.classList.add('active');
-      goToScene('introOnce');
-    };
-
-    function goToScene(id) {
-      currentScene = scenes[id];
-      loopCount = 0;
-      if (!currentScene) return;
-
-      outbreakScreen.classList.remove('active');
-      gameScreen.classList.add('active');
-
-      if (currentScene.video) {
-        sceneVideo.src = currentScene.video;
-        sceneVideo.loop = !!currentScene.loop;
-        sceneVideo.load();
-        sceneVideo.play().catch(() => {});
-      } else {
-        sceneVideo.removeAttribute('src');
-        sceneVideo.load();
-      }
-
-      qEl.textContent = currentScene.question || "";
-      statusEl.textContent = currentScene.status || "";
-      hintEl.textContent = "";
-
-      choiceA.style.display = "inline-block";
-      choiceB.style.display = "inline-block";
-      choiceA.className = "btn";
-      choiceB.className = "btn btn-danger";
-      choiceA.onclick = null;
-      choiceB.onclick = null;
-
-      sceneVideo.onended = () => {
-        if (!currentScene) return;
-
-        if (currentScene.requiredLoops) {
-          loopCount++;
-          if (loopCount < currentScene.requiredLoops) {
-            sceneVideo.currentTime = 0;
-            sceneVideo.play();
-            return;
-          } else {
-            hintEl.textContent = "You feel something watching from the hallway.";
-            choiceA.textContent = "Next";
-            choiceB.style.display = "none";
-
-            if (currentScene.comingSoonUnlocksOutbreak) {
-              choiceA.onclick = () => showOutbreak();
-            } else if (currentScene.id === "v3") {
-              choiceA.onclick = () => goToScene("v4");
-            } else if (currentScene.id === "v5") {
-              choiceA.onclick = () => goToScene("v6ComingSoon");
+                // 5 ENDINGS WITH POINTS
+                END1: {
+                    title: "🏆 PERFECT DETECTIVE! 100 PTS",
+                    story: ["TIMEPIECE RECOVERED! Butler's fingerprints on box. Governor promotes you to Chief. LEGENDARY!"],
+                    points: 100, class: "victory", final: true
+                },
+                END2: {
+                    title: "💀 TOTAL FAILURE 0 PTS",
+                    story: ["Thief vanished completely. Governor fires you. Career in RUINS. Game Over."],
+                    points: 0, class: "game-over", final: true
+                },
+                END3: {
+                    title: "⚠️ PARTIAL SUCCESS 40 PTS",
+                    story: ["Found solid clues but thief escaped. Cold case filed. Decent effort."],
+                    points: 40, class: "game-over", final: true
+                },
+                END4: {
+                    title: "⚠️ AMBUSH TRAP 20 PTS",
+                    story: ["Tunnel collapses! You escape but timepiece gone. Risky move."],
+                    points: 20, class: "game-over", final: true
+                },
+                END5: {
+                    title: "✅ GREAT WORK 85 PTS",
+                    story: ["Caught accomplice with timepiece! Mastermind still loose. Excellent police work!"],
+                    points: 85, class: "victory", final: true
+                }
             }
-            return;
-          }
+        };
+
+        function updateUI() {
+            document.getElementById('choicesLeft').textContent = Math.max(0, maxChoices - choicesMade);
+            document.getElementById('pathCount').textContent = choicesMade;
+            document.getElementById('pointsDisplay').textContent = `Choices: ${choicesMade}/10`;
         }
 
-        if (currentScene.onEnd) {
-          goToScene(currentScene.onEnd);
+        function selectChoice(sceneNum, choiceNum) {
+            if (gameEnded || choicesMade >= maxChoices) {
+                alert("🔒 GAME LOCKED - ONE TIME ONLY!");
+                return;
+            }
+
+            choicesMade++;
+            playerPath.push(`${sceneNum}-${choiceNum}`);
+            updateUI();
+            
+            const sceneKey = `${sceneNum}-${choiceNum}`;
+            const sceneData = GAME_DATA.scenes[sceneKey];
+            
+            if (!sceneData) {
+                endGame("END2"); // Invalid path
+                return;
+            }
+
+            showScene(sceneData);
+            
+            if (choicesMade >= maxChoices || sceneData.final) {
+                setTimeout(() => endGame(sceneKey), 2000);
+            }
         }
-      };
 
-      setupButtonsForScene(currentScene);
-    }
+        function showScene(sceneData) {
+            const container = document.getElementById('currentScene');
+            let html = `<h2>${sceneData.title}</h2>`;
+            
+            sceneData.story.forEach(line => {
+                html += `<div class="scene-text">${line}</div>`;
+            });
+            
+            if (sceneData.choices && !sceneData.final) {
+                html += '<ul>';
+                sceneData.choices.forEach((choice, index) => {
+                    html += `<li onclick="selectChoice(${sceneData.choices ? Object.keys(GAME_DATA.scenes).find(k => GAME_DATA.scenes[k] === sceneData).split('-')[0] : '3'}, ${index+1})">${choice.text}</li>`;
+                });
+                html += '</ul>';
+            }
+            
+            container.innerHTML = html;
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
 
-    function setupButtonsForScene(scene) {
-      const a = scene.choiceA;
-      const b = scene.choiceB;
+        function endGame(endKey) {
+            gameEnded = true;
+            document.body.classList.add('locked');
+            
+            const ending = GAME_DATA.scenes[endKey] || GAME_DATA.scenes.END2;
+            finalPoints = ending.points;
+            
+            const container = document.getElementById('currentScene');
+            container.className = `scene ${ending.class}`;
+            container.innerHTML = `
+                <h2>${ending.title}</h2>
+                ${ending.story.map(line => `<div class="scene-text">${line}</div>`).join('')}
+                <div class="final">
+                    🎮 FINAL SCORE: <strong style="color: ${ending.points >= 80 ? '#2ed573' : ending.points >= 40 ? '#ffcc00' : '#ff4757'}">${finalPoints} POINTS</strong><br>
+                    🛑 ONE TIME GAME COMPLETE - NO RESTARTS
+                </div>
+            `;
+            
+            document.getElementById('pointsDisplay').innerHTML = `🏁 GAME OVER<br>${finalPoints} PTS`;
+            document.querySelectorAll('li').forEach(li => li.style.pointerEvents = 'none');
+        }
 
-      if (!a && !b) {
-        choiceA.style.display = "none";
-        choiceB.style.display = "none";
-        return;
-      }
-
-      if (a) {
-        choiceA.textContent = a.label || "A";
-        choiceA.onclick = () => handleChoice(a);
-      } else {
-        choiceA.style.display = "none";
-      }
-
-      if (b) {
-        choiceB.textContent = b.label || "B";
-        choiceB.onclick = () => handleChoice(b);
-      } else {
-        choiceB.style.display = "none";
-      }
-    }
-
-    function handleChoice(choice) {
-      if (choice.next === "restart" || choice.death) {
-        deathScene(choice.deathText || "You died.");
-        return;
-      }
-
-      if (choice.nextText) {
-        statusEl.textContent = choice.nextText;
-      }
-      if (choice.statusAfter) {
-        statusEl.textContent = choice.statusAfter;
-      }
-
-      if (choice.next) {
-        goToScene(choice.next);
-      }
-    }
-
-    function deathScene(text) {
-      sceneVideo.removeAttribute('src');
-      sceneVideo.load();
-      qEl.textContent = "The knocking stops.";
-      statusEl.textContent = text;
-
-      choiceA.textContent = "Restart night";
-      choiceB.textContent = "Back to menu";
-
-      choiceA.onclick = () => goToScene("introOnce");
-      choiceB.onclick = () => {
-        gameScreen.classList.remove('active');
-        outbreakScreen.classList.remove('active');
-        startScreen.classList.add('active');
-      };
-    }
-
-    function showOutbreak() {
-      gameScreen.classList.remove('active');
-      outbreakScreen.classList.add('active');
-
-      outbreakVideo.src = "media/news-outbreak.mp4";
-      outbreakVideo.loop = false;
-      outbreakVideo.load();
-      outbreakVideo.play().catch(() => {});
-    }
-  </script>
+        // Initialize UI
+        updateUI();
+    </script>
 </body>
-</html> 
+</html>
