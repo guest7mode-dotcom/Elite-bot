@@ -157,7 +157,51 @@
         <span class="dot"></span>
         Open Discord Support
       </a>
+
+      <!-- Headmaster trigger + login -->
+      <p id="hmTrigger" style="font-size:0.7rem; opacity:0.4; text-align:center; margin-top:24px; cursor:pointer;">
+        Need more help?
+      </p>
+
+      <div id="hmLoginBox" style="display:none; margin-top:8px; text-align:center;">
+        <input id="hmPasswordInput" type="password"
+               placeholder="Headmaster password"
+               style="padding:6px 8px; border-radius:6px; border:1px solid #444; width:70%; max-width:220px; font-size:0.8rem;">
+        <button id="hmLoginBtn"
+                style="margin-top:6px; padding:6px 10px; border-radius:6px; border:none; font-size:0.8rem; background:#e33467; color:#fff;">
+          Unlock
+        </button>
+        <p id="hmLoginMsg" style="font-size:0.7rem; margin-top:4px;"></p>
+      </div>
     </section>
   </div>
+
+  <script>
+    const HM_PASSWORD = "Rem@177";
+
+    const hmTrigger = document.getElementById("hmTrigger");
+    const hmLoginBox = document.getElementById("hmLoginBox");
+    const hmPasswordInput = document.getElementById("hmPasswordInput");
+    const hmLoginBtn = document.getElementById("hmLoginBtn");
+    const hmLoginMsg = document.getElementById("hmLoginMsg");
+
+    hmTrigger.addEventListener("click", () => {
+      hmLoginBox.style.display = "block";
+      hmTrigger.style.opacity = "0.15";
+    });
+
+    hmLoginBtn.addEventListener("click", () => {
+      const val = hmPasswordInput.value;
+      if (val === HM_PASSWORD) {
+        hmLoginMsg.style.color = "#7dffb3";
+        hmLoginMsg.textContent = "Headmaster unlocked.";
+        // later you can redirect to HM page:
+        // window.location.href = "suspicious24.html";
+      } else {
+        hmLoginMsg.style.color = "#f66";
+        hmLoginMsg.textContent = "Wrong password.";
+      }
+    });
+  </script>
 </body>
 </html>
