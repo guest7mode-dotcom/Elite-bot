@@ -158,7 +158,7 @@
         Open Discord Support
       </a>
 
-      <!-- Headmaster trigger + login -->
+      <!-- Hidden Headmaster trigger + login -->
       <p id="hmTrigger" style="font-size:0.7rem; opacity:0.4; text-align:center; margin-top:24px; cursor:pointer;">
         Need more help?
       </p>
@@ -185,18 +185,20 @@
     const hmLoginBtn = document.getElementById("hmLoginBtn");
     const hmLoginMsg = document.getElementById("hmLoginMsg");
 
+    // Show hidden login when text is tapped
     hmTrigger.addEventListener("click", () => {
       hmLoginBox.style.display = "block";
       hmTrigger.style.opacity = "0.15";
     });
 
+    // Check password and redirect
     hmLoginBtn.addEventListener("click", () => {
       const val = hmPasswordInput.value;
       if (val === HM_PASSWORD) {
         hmLoginMsg.style.color = "#7dffb3";
-        hmLoginMsg.textContent = "Headmaster unlocked.";
-        // later you can redirect to HM page:
-        // window.location.href = "suspicious24.html";
+        hmLoginMsg.textContent = "Headmaster unlocked. Redirecting...";
+        // redirect to headmaster UI file in same folder
+        window.location.href = "headsuspicious24.html";
       } else {
         hmLoginMsg.style.color = "#f66";
         hmLoginMsg.textContent = "Wrong password.";
