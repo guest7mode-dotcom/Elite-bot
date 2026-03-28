@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Nurturing High School</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      color: #ffe6e6;
+      background: url("https://cdn.shoob.gg/images/cards/S/b14c680615518b50adcc3f3a94c7caddbea8a5c921476b0e028dc78f27eaa50a.gif")
+                  center/cover no-repeat fixed;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      padding: 18px 40px 40px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      background: rgba(0, 0, 0, 0.35); /* slight dark so text is readable */
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 2px solid #ff1744;
+      box-shadow: 0 0 16px rgba(255, 23, 68, 0.9);
+    }
+    .brand-text {
+      letter-spacing: 0.35em;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #f8bbd0;
+    }
+
+    .top-menu {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .menu-link {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid #ff1744;
+      background: rgba(5, 0, 10, 0.9);
+      color: #ffe6e6;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    .menu-link:hover {
+      background: #ff1744;
+      color: #120003;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      max-width: 520px;
+    }
+
+    .hero-title {
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 0.9;
+      margin: 0 0 18px 0;
+      letter-spacing: 0.08em;
+    }
+    .hero-title .block {
+      display: block;
+      text-transform: uppercase;
+      -webkit-text-stroke: 1px #ff1744;
+      color: transparent;
+    }
+    .accent-line {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #ff5252;
+      margin: 0 0 6px 0;
+    }
+    .accent-sub {
+      font-size: 13px;
+      max-width: 420px;
+      color: #f8bbd0;
+      margin: 0 0 18px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="top">
+      <div class="brand-row">
+        <div class="brand-mark"></div>
+        <span class="brand-text">NURTURE HIGH</span>
+      </div>
+      <nav class="top-menu">
+        <a class="menu-link" href="shop.html">Shop</a>
+        <a class="menu-link" href="help.html">Help</a>
+        <a class="menu-link" href="about.html">About</a>
+        <a class="menu-link" href="suspicious24.html">Suspicious24</a>
+        <a class="menu-link" href="sonu.html">Sonu</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+      <section class="hero-left">
+        <h1 class="hero-title">
+          <span class="block">THE</span>
+          <span class="block">ULTIMATE</span>
+          <span class="block">ACADEMY.</span>
+        </h1>
+
+        <p class="accent-line">
+          EXPERIENCE THE SCHOOL REVOLUTION WITH NURTURE HIGH.
+        </p>
+        <p class="accent-sub">
+          Welcome to our nurturing high school, where effort is currency and every choice reshapes your future.
+        </p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
